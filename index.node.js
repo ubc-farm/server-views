@@ -13,8 +13,8 @@ function pageViews(pagename, path$$ = pagename, context) {
 	try {
 		moduleFolder = require.resolve(`ubc-farm-page-${pagename}`);
 	} catch (err) {
-		//TODO: Make a better resolution algorithm
-		//If no module found, check for a sibling package folder.
+		// TODO: Make a better resolution algorithm
+		// If no module found, check for a sibling package folder.
 		moduleFolder = path.resolve(__dirname, `../page-${pagename}`);
 	}
 
@@ -29,23 +29,24 @@ function pageViews(pagename, path$$ = pagename, context) {
 			if (reqPath) {
 				filePath = path.join(moduleFolder, 'views', reqPath);
 			} else {
-				//get index
+				// get index
 				filePath = path.join(moduleFolder, 'views', 'index');
 			}
 			filePath = path.relative(__dirname, filePath);
 
 			reply.view(filePath, context);
-		}
-	}
+		},
+	};
 }
 
 var packagePages = [
-	pageViews('calendar'  ),
-	pageViews('directory' ),
-	pageViews('fields'    ),
-	pageViews('invoice'   , 'finance/sales'),
+	pageViews('calendar'),
+	pageViews('directory'),
+	pageViews('fields'),
+	pageViews('invoice', 'finances/sales'),
 	pageViews('map-editor', 'fields/editor'),
-	pageViews('planner')  ,
+	pageViews('add-items', 'finances/add-item'),
+	pageViews('planner', 'calendar/planner'),
 ];
 
 var homepage = {
@@ -53,10 +54,10 @@ var homepage = {
 	path: '/',
 	handler: {
 		view: {
-			template: 'pages/homepage.html'
-		}
-	}
-}
+			template: 'pages/homepage.html',
+		},
+	},
+};
 
 var config = {"port":3040};
 
